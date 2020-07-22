@@ -325,7 +325,7 @@ flush、flushall 清空数据库也很慢
 
 
 ## sorted set实现原理？跳表是如何实现的？
-set：内部的键值对是无序的、唯一的，它内部实现相当于一个特殊的字典，字典中所有的value值都为NULL
+set：内部的键值对是无序的、唯一的，它内部实现相当于一个特殊的字典，字典中所有的value值都为NULL  <br>
 zset：一方面它是一个set保证内部value的唯一性，另一方面它可以给每个value赋予一个score代表这个value的排序权重
 
 定义一个zsl头指针header，kv之间使用指针串起来形成了双向链表结构，它们是有序排列的从小到大，不同kv层高不一样，随机层数，每个元素都是从kv header出发
@@ -371,18 +371,18 @@ PSYNC执行过程中比较重要的概念有3个： <br>
 Sentinel 负责持续监控主从节点的健康，当主节点挂掉时自动选择一个最优的从节点切换成主节点的地址 <br>
 客户端连接集群时，会首先连接sentinel，通过sentinel来查询主节点地址，再连接主节点进行数据交互，主节点发生故障时，客户端会重新向sentinel要地址，sentinel会将最新的地址告诉客户端   <br>
 
-三个定时任务：
-1、每10s每个sentinel对master和slave执行info（发现slave节点、确定主从关系）
-2、每2s每个sentinel通过master节点的channel交换信息（pub/sub）（交互对节点的看法和自身信息）
+三个定时任务：<br>
+1、每10s每个sentinel对master和slave执行info（发现slave节点、确定主从关系）  <br>
+2、每2s每个sentinel通过master节点的channel交换信息（pub/sub）（交互对节点的看法和自身信息）  <br>
 3、每1s每个sentinel对其它sentinel和redis执行ping （心跳检测）
 
 主观下线和客观下线：
 主观下线：每个sentinel节点对redis节点失败的"偏见"
 客观下线：所有sentinel节点对redis节点失败"达成共识" (超过quorum个统一)
 
-选择"合适的"slave节点：
-1、选择slave-priority最高的slave节点
-2、选择复制偏移量最大的slave节点
+选择"合适的"slave节点： <br>
+1、选择slave-priority最高的slave节点  <br>
+2、选择复制偏移量最大的slave节点  <br>
 3、选择runid最小的slave节点
 
     >>> from redis.sentinel import Sentinel
