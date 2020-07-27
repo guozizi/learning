@@ -185,17 +185,17 @@ eg：要找一个文件/var/test.txt  <br>
 - 日志文件系统(Journal File System)  <br>
 日志的写入模式：  <br>
     1. data=journal
-    在将data写入文件系统前，必须等待metadata和data的journal已经落盘了 <br>
+    在将data写入文件系统前，必须等待metadata和data的journal已经落盘了  <br>
     fsync(data journal) -> fsync(metadata journal) -> fsync(data) -> fsync(metadata)   <br>
-    这种方式存在效率问题，用户数据较大时，降低了效率，安全性最高   <br>
+    这种方式存在效率问题，用户数据较大时，降低了效率，安全性最高
     2. data=ordered
     只记录metadata的journal日志，写metadata的journal前，必须先确保data已经落盘 <br>
     fsync(data)(确保data先落盘) -> fsync(metadata journal) -> fsync(metadata)   <br>
-    一旦发生掉电故障，最坏的结果也就是最后一条日志没记完   <br>
+    一旦发生掉电故障，最坏的结果也就是最后一条日志没记完
     3. data=writeback
     仅记录metadata journal，并且不保证data比metadata先落盘  <br>
     fsync(metadata journal) -> fsync(metadata)  <br>
-    性能最好，安全性低
+    性能最好，安全性低
         
 - Journal File System带来的问题  <br>
 当对文件系统的操作太频繁，导致IO压力过大，jbd2进程会占用大量的磁盘IO（iotop可查看）  <br>
