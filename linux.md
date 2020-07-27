@@ -100,8 +100,19 @@ awk '{print $9}' access_log |sort | uniq -c | sort -n -r (没有对应的url)
  <https://blog.csdn.net/jirryzhang/article/details/82467554> 
 
 ## 删除大量文件（rsync）
-mkdir /tmp/test  （建立一个空的文件夹）<br>zz  <br>
-rsync --delete-before -a -H -v --progress --stats /tmp/test/ log/  <br>
+mkdir /tmp/test  （建立一个空的文件夹）<br>  
+rsync --delete-before -a -H -v --progress --stats /tmp/test/ log/ （用rsync删除目标目录）<br>
+    
+    –delete-before 接收者在传输之前进行删除操作
+    –progress 在传输时显示传输过程
+    -a 归档模式，表示以递归方式传输文件，并保持所有文件属性
+    -H 保持硬连接的文件
+    -v 详细输出模式
+    –stats 给出某些文件的传输状态
+    
+rm删除内容时，将目录的每一个条目逐个删除(unlink)，需要循环重复操作很多次, rsync删除内容时，建立好新的空目录，替换掉老目录，基本没开销
+
+<http://www.361way.com/rsync-fast-del-file/4681.html>
 
 ## linux的fork了解吗？什么是写时复制机制？
 fork()：创建子进程，父进程返回子进程的PID，子进程返回0
