@@ -54,5 +54,3 @@ wsgi.py --> WSGIHandler --> base.BaseHandler(self.load_middleware\(django/core/h
 
 <https://www.jianshu.com/p/1ff05dfb3d0d>
 
-## celery中soft-time-limit和hard-time-limit的作用和区别
-## celery的各个节点如何保证公平消费的？broker的任务是如何分发给各个节点的？

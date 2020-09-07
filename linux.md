@@ -45,11 +45,11 @@ mount发现 "/dev/sda2 on / type ext4 (ro,relatime)"
 
 然后执行 mount -o remount, rw / 成功
 
-重启docker发现  <br>
+重启docker：systemctl restart docker 发现  <br>
 ![avatar](picture/docker.png)
 
 之前关闭ext4的日志系统时也遇到过docker重启失败的问题，后来 systemctl restart containerd解决了,这次尝试发现不行 <br>
-后面执行 rm /etc/docker/key.json 再 systemctl status docker.service 成功
+后面执行 rm /etc/docker/key.json 再 systemctl restart docker 成功
 
 <https://blog.csdn.net/lilywri823/article/details/86607247>
 <https://blog.csdn.net/controllerha/article/details/78828584>
@@ -127,7 +127,7 @@ fork()之后，kernel把父进程中所有的内存页的权限都设为read-onl
 <https://www.cnblogs.com/wuchanming/p/4495479.html>
 <http://xstarcd.github.io/wiki/shell/exec_redirect.html>
 
-## 软连接和硬链接了解吗？它们有什么区别？底层如何实现的？
+## 软连接和硬链接，底层如何实现
 - 硬链接: 与普通文件没什么不同，inode 都指向同一个文件在硬盘中的区块  <br>
 删除源文件，硬链接的文件仍然在，文件系统会维护一个引用计数，只要有文件指向这个区块，它就不会从硬盘上消失  <br>
 - 软链接: 保存了源文件的绝对路径，inode 都指向不同的内存空间，在硬盘上有独立的区块，访问时替换自身路径  <br>
